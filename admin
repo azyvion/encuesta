@@ -1,205 +1,480 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Azyvion — Panel Administrativo</title>
-<style>
-:root{--navy:#071A3A;--blue:#3b82f6;--light:#eef6ff;--bg:#f5f7fb;--text:#172033;--muted:#667085;--border:#e4e7ec;--white:#fff}
-*{box-sizing:border-box}body{margin:0;font-family:Inter,Arial,sans-serif;background:var(--bg);color:var(--text)}
-header{background:var(--navy);color:#fff;padding:18px 28px;display:flex;align-items:center;justify-content:space-between}
-.brand{font-weight:800;letter-spacing:.5px}.brand span{font-weight:400;opacity:.75}
-.container{max-width:1400px;margin:28px auto;padding:0 18px}
-.login{max-width:420px;margin:90px auto;background:#fff;padding:32px;border-radius:18px;box-shadow:0 12px 35px #00000012}
-h1{margin:0 0 8px}.muted{color:var(--muted)}input,select,textarea{width:100%;padding:11px 12px;border:1px solid var(--border);border-radius:10px;font:inherit;background:#fff}button{border:0;border-radius:10px;padding:11px 15px;font-weight:700;cursor:pointer}.primary{background:var(--blue);color:#fff}.secondary{background:#fff;border:1px solid var(--border)}.danger{background:#fee4e2;color:#b42318}
-label{display:block;font-size:13px;font-weight:700;margin:14px 0 6px}
-.cards{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin:22px 0}.card{background:#fff;padding:18px;border-radius:16px;border:1px solid var(--border)}.card .num{font-size:28px;font-weight:800;margin-top:7px}
-.toolbar{background:#fff;border:1px solid var(--border);padding:14px;border-radius:16px;display:grid;grid-template-columns:2fr 1fr 1fr auto;gap:10px;margin-bottom:14px}
-.table-wrap{background:#fff;border:1px solid var(--border);border-radius:16px;overflow:auto}
-table{width:100%;border-collapse:collapse;min-width:1050px}th,td{text-align:left;padding:13px;border-bottom:1px solid var(--border);font-size:13px;vertical-align:top}th{background:#f9fafb;position:sticky;top:0;z-index:1}.badge{display:inline-block;padding:5px 9px;border-radius:999px;background:var(--light);font-size:12px;font-weight:700}
-.row-actions{display:flex;gap:6px}.row-actions button{padding:7px 9px;font-size:12px}
-.modal{position:fixed;inset:0;background:#0008;display:none;align-items:center;justify-content:center;padding:20px}.modal.open{display:flex}.modal-box{background:#fff;max-width:850px;width:100%;max-height:90vh;overflow:auto;border-radius:18px;padding:24px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}.detail{background:#f8fafc;padding:12px;border-radius:10px;margin-top:6px;white-space:pre-wrap}.footer-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:20px}
-.status{margin:10px 0;color:var(--muted);font-size:13px}
-@media(max-width:900px){.cards{grid-template-columns:repeat(2,1fr)}.toolbar{grid-template-columns:1fr}.grid2{grid-template-columns:1fr}}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Azyvion — Panel Administrativo</title>
+    <style>
+        :root {
+            --navy: #071A3A;
+            --blue: #3b82f6;
+            --light: #eef6ff;
+            --bg: #f5f7fb;
+            --text: #172033;
+            --muted: #667085;
+            --border: #e4e7ec;
+            --white: #fff
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            margin: 0;
+            font-family: Inter, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text)
+        }
+
+        header {
+            background: var(--navy);
+            color: #fff;
+            padding: 18px 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between
+        }
+
+        .brand {
+            font-weight: 800;
+            letter-spacing: .5px
+        }
+
+        .brand span {
+            font-weight: 400;
+            opacity: .75
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 28px auto;
+            padding: 0 18px
+        }
+
+        .login {
+            max-width: 420px;
+            margin: 90px auto;
+            background: #fff;
+            padding: 32px;
+            border-radius: 18px;
+            box-shadow: 0 12px 35px #00000012
+        }
+
+        h1 {
+            margin: 0 0 8px
+        }
+
+        .muted {
+            color: var(--muted)
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 11px 12px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            font: inherit;
+            background: #fff
+        }
+
+        button {
+            border: 0;
+            border-radius: 10px;
+            padding: 11px 15px;
+            font-weight: 700;
+            cursor: pointer
+        }
+
+        .primary {
+            background: var(--blue);
+            color: #fff
+        }
+
+        .secondary {
+            background: #fff;
+            border: 1px solid var(--border)
+        }
+
+        .danger {
+            background: #fee4e2;
+            color: #b42318
+        }
+
+        label {
+            display: block;
+            font-size: 13px;
+            font-weight: 700;
+            margin: 14px 0 6px
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 14px;
+            margin: 22px 0
+        }
+
+        .card {
+            background: #fff;
+            padding: 18px;
+            border-radius: 16px;
+            border: 1px solid var(--border)
+        }
+
+        .card .num {
+            font-size: 28px;
+            font-weight: 800;
+            margin-top: 7px
+        }
+
+        .toolbar {
+            background: #fff;
+            border: 1px solid var(--border);
+            padding: 14px;
+            border-radius: 16px;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr auto;
+            gap: 10px;
+            margin-bottom: 14px
+        }
+
+        .table-wrap {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: auto
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 1050px
+        }
+
+        th,
+        td {
+            text-align: left;
+            padding: 13px;
+            border-bottom: 1px solid var(--border);
+            font-size: 13px;
+            vertical-align: top
+        }
+
+        th {
+            background: #f9fafb;
+            position: sticky;
+            top: 0;
+            z-index: 1
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 9px;
+            border-radius: 999px;
+            background: var(--light);
+            font-size: 12px;
+            font-weight: 700
+        }
+
+        .row-actions {
+            display: flex;
+            gap: 6px
+        }
+
+        .row-actions button {
+            padding: 7px 9px;
+            font-size: 12px
+        }
+
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: #0008;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px
+        }
+
+        .modal.open {
+            display: flex
+        }
+
+        .modal-box {
+            background: #fff;
+            max-width: 850px;
+            width: 100%;
+            max-height: 90vh;
+            overflow: auto;
+            border-radius: 18px;
+            padding: 24px
+        }
+
+        .grid2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px
+        }
+
+        .detail {
+            background: #f8fafc;
+            padding: 12px;
+            border-radius: 10px;
+            margin-top: 6px;
+            white-space: pre-wrap
+        }
+
+        .footer-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px
+        }
+
+        .status {
+            margin: 10px 0;
+            color: var(--muted);
+            font-size: 13px
+        }
+
+        @media(max-width:900px) {
+            .cards {
+                grid-template-columns: repeat(2, 1fr)
+            }
+
+            .toolbar {
+                grid-template-columns: 1fr
+            }
+
+            .grid2 {
+                grid-template-columns: 1fr
+            }
+        }
+    </style>
 </head>
+
 <body>
-<header><div class="brand">AZYVION <span>— Admin</span></div><button class="secondary" id="logoutBtn" style="display:none">Cerrar sesión</button></header>
+    <header>
+        <div class="brand">AZYVION <span>— Admin</span></div><button class="secondary" id="logoutBtn"
+            style="display:none">Cerrar sesión</button>
+    </header>
 
-<div id="loginView" class="login">
-  <h1>Panel administrativo</h1>
-  <p class="muted">Gestiona los diagnósticos y leads de Azyvion.</p>
-  <label>Clave de administrador</label>
-  <input id="key" type="password" placeholder="Ingresa tu clave">
-  <button class="primary" style="width:100%;margin-top:16px" onclick="login()">Entrar</button>
-  <div id="loginMsg" class="status"></div>
-</div>
+    <div id="loginView" class="login">
+        <h1>Panel administrativo</h1>
+        <p class="muted">Gestiona los diagnósticos y leads de Azyvion.</p>
+        <label>Clave de administrador</label>
+        <input id="key" type="password" placeholder="Ingresa tu clave">
+        <button class="primary" style="width:100%;margin-top:16px" onclick="login()">Entrar</button>
+        <div id="loginMsg" class="status"></div>
+    </div>
 
-<main id="app" class="container" style="display:none">
-  <div style="display:flex;justify-content:space-between;align-items:end;gap:12px">
-    <div><h1>Dashboard</h1><div class="muted">Diagnóstico empresarial y gestión de leads.</div></div>
-    <button class="primary" onclick="cargar()">↻ Actualizar</button>
-  </div>
+    <main id="app" class="container" style="display:none">
+        <div style="display:flex;justify-content:space-between;align-items:end;gap:12px">
+            <div>
+                <h1>Dashboard</h1>
+                <div class="muted">Diagnóstico empresarial y gestión de leads.</div>
+            </div>
+            <button class="primary" onclick="cargar()">↻ Actualizar</button>
+        </div>
 
-  <div class="cards">
-    <div class="card"><div class="muted">Diagnósticos</div><div class="num" id="total">0</div></div>
-    <div class="card"><div class="muted">Interesados</div><div class="num" id="interesados">0</div></div>
-    <div class="card"><div class="muted">Sistema personalizado</div><div class="num" id="sistemas">0</div></div>
-    <div class="card"><div class="muted">Prioridad alta</div><div class="num" id="altas">0</div></div>
-    <div class="card"><div class="muted">Clientes</div><div class="num" id="clientes">0</div></div>
-  </div>
+        <div class="cards">
+            <div class="card">
+                <div class="muted">Diagnósticos</div>
+                <div class="num" id="total">0</div>
+            </div>
+            <div class="card">
+                <div class="muted">Interesados</div>
+                <div class="num" id="interesados">0</div>
+            </div>
+            <div class="card">
+                <div class="muted">Sistema personalizado</div>
+                <div class="num" id="sistemas">0</div>
+            </div>
+            <div class="card">
+                <div class="muted">Prioridad alta</div>
+                <div class="num" id="altas">0</div>
+            </div>
+            <div class="card">
+                <div class="muted">Clientes</div>
+                <div class="num" id="clientes">0</div>
+            </div>
+        </div>
 
-  <div class="toolbar">
-    <input id="buscar" placeholder="Buscar empresa, contacto, correo..." oninput="render()">
-    <select id="estado" onchange="render()"><option value="">Todos los estados</option></select>
-    <select id="prioridad" onchange="render()"><option value="">Todas las prioridades</option><option>Alta</option><option>Media</option><option>Baja</option></select>
-    <button class="secondary" onclick="limpiarFiltros()">Limpiar</button>
-  </div>
+        <div class="toolbar">
+            <input id="buscar" placeholder="Buscar empresa, contacto, correo..." oninput="render()">
+            <select id="estado" onchange="render()">
+                <option value="">Todos los estados</option>
+            </select>
+            <select id="prioridad" onchange="render()">
+                <option value="">Todas las prioridades</option>
+                <option>Alta</option>
+                <option>Media</option>
+                <option>Baja</option>
+            </select>
+            <button class="secondary" onclick="limpiarFiltros()">Limpiar</button>
+        </div>
 
-  <div id="status" class="status"></div>
-  <div class="table-wrap">
-    <table><thead><tr>
-      <th>Empresa</th><th>Contacto</th><th>Necesidad</th><th>Objetivo</th><th>Interés</th><th>Prioridad</th><th>Estado</th><th>Acciones</th>
-    </tr></thead><tbody id="tbody"></tbody></table>
-  </div>
-</main>
+        <div id="status" class="status"></div>
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Empresa</th>
+                        <th>Contacto</th>
+                        <th>Necesidad</th>
+                        <th>Objetivo</th>
+                        <th>Interés</th>
+                        <th>Prioridad</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody"></tbody>
+            </table>
+        </div>
+    </main>
 
-<div id="modal" class="modal">
- <div class="modal-box">
-   <h2 id="modalTitle">Detalle</h2>
-   <div id="modalContent"></div>
-   <div class="footer-actions"><button class="secondary" onclick="cerrarModal()">Cerrar</button></div>
- </div>
-</div>
+    <div id="modal" class="modal">
+        <div class="modal-box">
+            <h2 id="modalTitle">Detalle</h2>
+            <div id="modalContent"></div>
+            <div class="footer-actions"><button class="secondary" onclick="cerrarModal()">Cerrar</button></div>
+        </div>
+    </div>
 
-<script>
-const API_URL = "https://script.google.com/macros/s/AKfycbxtFoPGl8G68lF8RXf6owSmcoGJh6In_FXafkcLjoFGo_S-0FSycysdZwm0jJGzf8Q/exec";
-let ADMIN_KEY = sessionStorage.getItem("azyvion_admin_key") || "";
-let registros = [];
+    <script>
+        const API_URL = "https://script.google.com/macros/s/AKfycbzeIFNbWdrXebtAbjHOqHQnq3fA91rKyWHOvzYPjtHpHLmGrjYTFP4GIk8fcyiqwAZp/exec";
+        let ADMIN_KEY = sessionStorage.getItem("azyvion_admin_key") || "";
+        let registros = [];
 
-function api(action, payload={}) {
-  return fetch(API_URL, {
-    method:"POST",
-    mode:"cors",
-    headers:{"Content-Type":"text/plain;charset=utf-8"},
-    body:JSON.stringify({action, admin_key:ADMIN_KEY, ...payload})
-  }).then(async r => {
-    const t=await r.text();
-    try{return JSON.parse(t)}catch(e){throw new Error("Respuesta inválida del servidor: "+t)}
-  });
-}
+        function api(action, payload = {}) {
+            return fetch(API_URL, {
+                method: "POST",
+                mode: "cors",
+                headers: {"Content-Type": "text/plain;charset=utf-8"},
+                body: JSON.stringify({action, admin_key: ADMIN_KEY, ...payload})
+            }).then(async r => {
+                const t = await r.text();
+                try {return JSON.parse(t)} catch (e) {throw new Error("Respuesta inválida del servidor: " + t)}
+            });
+        }
 
-async function login(){
-  const k=document.getElementById("key").value.trim();
-  if(!k){document.getElementById("loginMsg").textContent="Ingresa la clave.";return}
-  ADMIN_KEY=k;
-  try{
-    const r=await api("ping");
-    if(!r.success) throw new Error(r.error||"Clave incorrecta");
-    sessionStorage.setItem("azyvion_admin_key",ADMIN_KEY);
-    document.getElementById("loginView").style.display="none";
-    document.getElementById("app").style.display="block";
-    document.getElementById("logoutBtn").style.display="block";
-    cargar();
-  }catch(e){
-    ADMIN_KEY="";
-    document.getElementById("loginMsg").textContent="No se pudo iniciar: "+e.message;
-  }
-}
+        async function login() {
+            const k = document.getElementById("key").value.trim();
+            if (!k) {document.getElementById("loginMsg").textContent = "Ingresa la clave."; return }
+            ADMIN_KEY = k;
+            try {
+                const r = await api("ping");
+                if (!r.success) throw new Error(r.error || "Clave incorrecta");
+                sessionStorage.setItem("azyvion_admin_key", ADMIN_KEY);
+                document.getElementById("loginView").style.display = "none";
+                document.getElementById("app").style.display = "block";
+                document.getElementById("logoutBtn").style.display = "block";
+                cargar();
+            } catch (e) {
+                ADMIN_KEY = "";
+                document.getElementById("loginMsg").textContent = "No se pudo iniciar: " + e.message;
+            }
+        }
 
-async function cargar(){
-  document.getElementById("status").textContent="Cargando datos...";
-  try{
-    const r=await api("get_data");
-    if(!r.success) throw new Error(r.error||"Error");
-    registros=r.data||[];
-    actualizarKPIs();
-    llenarEstados();
-    render();
-    document.getElementById("status").textContent=`${registros.length} registros cargados.`;
-  }catch(e){document.getElementById("status").textContent="Error: "+e.message}
-}
+        async function cargar() {
+            document.getElementById("status").textContent = "Cargando datos...";
+            try {
+                const r = await api("get_data");
+                if (!r.success) throw new Error(r.error || "Error");
+                registros = r.data || [];
+                actualizarKPIs();
+                llenarEstados();
+                render();
+                document.getElementById("status").textContent = `${registros.length} registros cargados.`;
+            } catch (e) {document.getElementById("status").textContent = "Error: " + e.message}
+        }
 
-function actualizarKPIs(){
- document.getElementById("total").textContent=registros.length;
- document.getElementById("interesados").textContent=registros.filter(x=>x.interes).length;
- document.getElementById("sistemas").textContent=registros.filter(x=>x.sistema==="Sí").length;
- document.getElementById("altas").textContent=registros.filter(x=>x.prioridad==="Alta").length;
- document.getElementById("clientes").textContent=registros.filter(x=>x.estado==="Cliente").length;
-}
-function llenarEstados(){
- const s=document.getElementById("estado"), actual=s.value;
- const estados=[...new Set(registros.map(x=>x.estado).filter(Boolean))];
- s.innerHTML='<option value="">Todos los estados</option>'+estados.map(x=>`<option>${esc(x)}</option>`).join("");
- s.value=actual;
-}
-function render(){
- const q=document.getElementById("buscar").value.toLowerCase(), e=document.getElementById("estado").value,p=document.getElementById("prioridad").value;
- const rows=registros.filter(x=>(!q||[x.empresa,x.contacto,x.correo,x.telefono].join(" ").toLowerCase().includes(q))&&(!e||x.estado===e)&&(!p||x.prioridad===p));
- document.getElementById("tbody").innerHTML=rows.map((x,i)=>`
+        function actualizarKPIs() {
+            document.getElementById("total").textContent = registros.length;
+            document.getElementById("interesados").textContent = registros.filter(x => x.interes).length;
+            document.getElementById("sistemas").textContent = registros.filter(x => x.sistema === "Sí").length;
+            document.getElementById("altas").textContent = registros.filter(x => x.prioridad === "Alta").length;
+            document.getElementById("clientes").textContent = registros.filter(x => x.estado === "Cliente").length;
+        }
+        function llenarEstados() {
+            const s = document.getElementById("estado"), actual = s.value;
+            const estados = [...new Set(registros.map(x => x.estado).filter(Boolean))];
+            s.innerHTML = '<option value="">Todos los estados</option>' + estados.map(x => `<option>${esc(x)}</option>`).join("");
+            s.value = actual;
+        }
+        function render() {
+            const q = document.getElementById("buscar").value.toLowerCase(), e = document.getElementById("estado").value, p = document.getElementById("prioridad").value;
+            const rows = registros.filter(x => (!q || [x.empresa, x.contacto, x.correo, x.telefono].join(" ").toLowerCase().includes(q)) && (!e || x.estado === e) && (!p || x.prioridad === p));
+            document.getElementById("tbody").innerHTML = rows.map((x, i) => `
  <tr>
   <td><strong>${esc(x.empresa)}</strong><br><span class="muted">${esc(x.industria)}</span></td>
-  <td>${esc(x.contacto||"—")}<br>${esc(x.correo||"")}</td>
-  <td>${esc(x.necesidad||"—")}</td>
-  <td>${esc(x.objetivo||"—")}</td>
-  <td>${x.interes?'<span class="badge">Interesado</span>':'No solicita contacto'}</td>
+  <td>${esc(x.contacto || "—")}<br>${esc(x.correo || "")}</td>
+  <td>${esc(x.necesidad || "—")}</td>
+  <td>${esc(x.objetivo || "—")}</td>
+  <td>${x.interes ? '<span class="badge">Interesado</span>' : 'No solicita contacto'}</td>
   <td><span class="badge">${esc(x.prioridad)}</span></td>
   <td>${esc(x.estado)}</td>
   <td><div class="row-actions"><button class="secondary" onclick="detalle('${escAttr(x.id)}')">Ver</button><button class="primary" onclick="editar('${escAttr(x.id)}')">Gestionar</button></div></td>
- </tr>`).join("")||'<tr><td colspan="8">No hay resultados.</td></tr>';
-}
-function encontrar(id){return registros.find(x=>x.id===id)}
-function detalle(id){
- const x=encontrar(id); if(!x)return;
- document.getElementById("modalTitle").textContent=x.empresa||"Detalle";
- document.getElementById("modalContent").innerHTML=`
+ </tr>`).join("") || '<tr><td colspan="8">No hay resultados.</td></tr>';
+        }
+        function encontrar(id) {return registros.find(x => x.id === id)}
+        function detalle(id) {
+            const x = encontrar(id); if (!x) return;
+            document.getElementById("modalTitle").textContent = x.empresa || "Detalle";
+            document.getElementById("modalContent").innerHTML = `
  <div class="grid2">
- ${campo("ID",x.id)}${campo("Fecha",x.fecha)}${campo("Industria",x.industria)}${campo("Empleados",x.tamano)}
- ${campo("Tarea principal",x.necesidad)}${campo("Automatización",x.automatizacion)}${campo("Áreas a mejorar",x.mejorar)}${campo("Método actual",x.metodo)}
- ${campo("Satisfacción",x.satisfaccion)}${campo("Objetivo",x.objetivo)}${campo("Detalle objetivo",x.objetivo_detalle)}
- ${campo("Sistema personalizado",x.sistema)}${campo("Contacto",x.contacto)}${campo("Correo",x.correo)}
- ${campo("Teléfono",x.telefono)}${campo("Cargo",x.cargo)}${campo("Medio",x.medio)}
+ ${campo("ID", x.id)}${campo("Fecha", x.fecha)}${campo("Industria", x.industria)}${campo("Empleados", x.tamano)}
+ ${campo("Tarea principal", x.necesidad)}${campo("Automatización", x.automatizacion)}${campo("Áreas a mejorar", x.mejorar)}${campo("Método actual", x.metodo)}
+ ${campo("Satisfacción", x.satisfaccion)}${campo("Objetivo", x.objetivo)}${campo("Detalle objetivo", x.objetivo_detalle)}
+ ${campo("Sistema personalizado", x.sistema)}${campo("Contacto", x.contacto)}${campo("Correo", x.correo)}
+ ${campo("Teléfono", x.telefono)}${campo("Cargo", x.cargo)}${campo("Medio", x.medio)}
  </div>`;
- document.getElementById("modal").classList.add("open");
-}
-function campo(a,b){return `<div><b>${esc(a)}</b><div class="detail">${esc(b||"—")}</div></div>`}
-function editar(id){
- const x=encontrar(id); if(!x)return;
- document.getElementById("modalTitle").textContent="Gestionar lead";
- document.getElementById("modalContent").innerHTML=`
+            document.getElementById("modal").classList.add("open");
+        }
+        function campo(a, b) {return `<div><b>${esc(a)}</b><div class="detail">${esc(b || "—")}</div></div>`}
+        function editar(id) {
+            const x = encontrar(id); if (!x) return;
+            document.getElementById("modalTitle").textContent = "Gestionar lead";
+            document.getElementById("modalContent").innerHTML = `
  <div class="grid2">
   <div><b>Empresa</b><div class="detail">${esc(x.empresa)}</div></div>
-  <div><b>Contacto</b><div class="detail">${esc(x.contacto||"—")}</div></div>
-  <div><label>Estado</label><select id="editEstado">${["Nuevo","Contactado","Diagnóstico","Propuesta","Negociación","Cliente","No interesado","Sin respuesta"].map(v=>`<option ${v===x.estado?"selected":""}>${v}</option>`).join("")}</select></div>
-  <div><label>Prioridad</label><select id="editPrioridad">${["Alta","Media","Baja"].map(v=>`<option ${v===x.prioridad?"selected":""}>${v}</option>`).join("")}</select></div>
-  <div><label>Responsable</label><select id="editResponsable">${["Azyvion","Ventas","Tecnología","Dirección"].map(v=>`<option ${v===x.responsable?"selected":""}>${v}</option>`).join("")}</select></div>
+  <div><b>Contacto</b><div class="detail">${esc(x.contacto || "—")}</div></div>
+  <div><label>Estado</label><select id="editEstado">${["Nuevo", "Contactado", "Diagnóstico", "Propuesta", "Negociación", "Cliente", "No interesado", "Sin respuesta"].map(v => `<option ${v === x.estado ? "selected" : ""}>${v}</option>`).join("")}</select></div>
+  <div><label>Prioridad</label><select id="editPrioridad">${["Alta", "Media", "Baja"].map(v => `<option ${v === x.prioridad ? "selected" : ""}>${v}</option>`).join("")}</select></div>
+  <div><label>Responsable</label><select id="editResponsable">${["Azyvion", "Ventas", "Tecnología", "Dirección"].map(v => `<option ${v === x.responsable ? "selected" : ""}>${v}</option>`).join("")}</select></div>
   <div><label>Próximo contacto</label><input id="editFecha" type="date" value="${escAttr(x.proximo)}"></div>
  </div>
- <label>Notas</label><textarea id="editNotas" rows="5">${esc(x.notas||"")}</textarea>
+ <label>Notas</label><textarea id="editNotas" rows="5">${esc(x.notas || "")}</textarea>
  <div class="footer-actions"><button class="primary" onclick="guardar('${escAttr(x.id)}')">Guardar cambios</button></div>`;
- document.getElementById("modal").classList.add("open");
-}
-async function guardar(id){
- const payload={
-  id,
-  estado:document.getElementById("editEstado").value,
-  prioridad:document.getElementById("editPrioridad").value,
-  responsable:document.getElementById("editResponsable").value,
-  proximo:document.getElementById("editFecha").value,
-  notas:document.getElementById("editNotas").value
- };
- try{
-  const r=await api("update_lead",payload);
-  if(!r.success) throw new Error(r.error||"No se pudo guardar");
-  cerrarModal(); await cargar();
- }catch(e){alert("Error: "+e.message)}
-}
-function limpiarFiltros(){document.getElementById("buscar").value="";document.getElementById("estado").value="";document.getElementById("prioridad").value="";render()}
-function cerrarModal(){document.getElementById("modal").classList.remove("open")}
-document.getElementById("logoutBtn").onclick=()=>{sessionStorage.removeItem("azyvion_admin_key");location.reload()}
-function esc(v){return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
-function escAttr(v){return esc(v)}
-if(ADMIN_KEY){document.getElementById("loginView").style.display="none";document.getElementById("app").style.display="block";document.getElementById("logoutBtn").style.display="block";cargar()}
-</script>
+            document.getElementById("modal").classList.add("open");
+        }
+        async function guardar(id) {
+            const payload = {
+                id,
+                estado: document.getElementById("editEstado").value,
+                prioridad: document.getElementById("editPrioridad").value,
+                responsable: document.getElementById("editResponsable").value,
+                proximo: document.getElementById("editFecha").value,
+                notas: document.getElementById("editNotas").value
+            };
+            try {
+                const r = await api("update_lead", payload);
+                if (!r.success) throw new Error(r.error || "No se pudo guardar");
+                cerrarModal(); await cargar();
+            } catch (e) {alert("Error: " + e.message)}
+        }
+        function limpiarFiltros() {document.getElementById("buscar").value = ""; document.getElementById("estado").value = ""; document.getElementById("prioridad").value = ""; render()}
+        function cerrarModal() {document.getElementById("modal").classList.remove("open")}
+        document.getElementById("logoutBtn").onclick = () => {sessionStorage.removeItem("azyvion_admin_key"); location.reload()}
+        function esc(v) {return String(v ?? "").replace(/[&<>"']/g, m => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;"}[m]))}
+        function escAttr(v) {return esc(v)}
+        if (ADMIN_KEY) {document.getElementById("loginView").style.display = "none"; document.getElementById("app").style.display = "block"; document.getElementById("logoutBtn").style.display = "block"; cargar()}
+    </script>
 </body>
+
 </html>
