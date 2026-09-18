@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Azyvion | Conoce tu negocio</title>
+<meta name="description" content="Ayúdanos a entender las necesidades de tu negocio y descubre cómo la tecnología puede ayudarte.">
+<style>
+:root{
+  --navy:#071a3a;
+  --blue:#1677ff;
+  --sky:#63c5ff;
+  --text:#10213d;
+  --muted:#6d7b91;
+  --line:#dce5f0;
+  --bg:#f5f8fc;
+  --white:#fff;
+  --success:#168b57;
+  --danger:#c83d3d;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(circle at 90% 5%,rgba(99,197,255,.16),transparent 28%),
+    linear-gradient(180deg,#fff 0%,var(--bg) 100%);
+  min-height:100vh;
+}
+.container{width:min(760px,calc(100% - 32px));margin:auto}
+header{padding:28px 0 10px}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{
+  width:42px;height:42px;border-radius:12px;
+  background:linear-gradient(135deg,var(--navy),var(--blue));
+  display:grid;place-items:center;color:white;font-weight:800;letter-spacing:-1px;
+}
+.brand-name{font-weight:800;font-size:20px;letter-spacing:.5px}
+.brand-tag{font-size:12px;color:var(--muted)}
+.lang{
+  margin-left:auto;border:1px solid var(--line);background:white;
+  padding:8px 10px;border-radius:10px;color:var(--text);cursor:pointer
+}
+.card{
+  background:rgba(255,255,255,.96);
+  border:1px solid var(--line);
+  border-radius:24px;
+  box-shadow:0 20px 55px rgba(7,26,58,.08);
+  overflow:hidden;
+}
+.top{padding:28px 28px 18px}
+h1{font-size:30px;line-height:1.15;margin:0 0 8px;letter-spacing:-.8px}
+.subtitle{margin:0;color:var(--muted);line-height:1.55}
+.progress{height:6px;background:#e9eef5;border-radius:99px;margin-top:22px;overflow:hidden}
+.progress-bar{height:100%;width:20%;background:linear-gradient(90deg,var(--blue),var(--sky));transition:.3s}
+.steps{display:flex;justify-content:space-between;margin-top:9px;color:#93a0b2;font-size:11px}
+.steps span.active{color:var(--blue);font-weight:700}
+.form{padding:0 28px 28px}
+.step{display:none;animation:fade .25s ease}
+.step.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+.step-title{font-size:20px;font-weight:800;margin:8px 0 5px}
+.step-desc{color:var(--muted);font-size:14px;margin-bottom:22px}
+.field{margin-bottom:21px}
+label{display:block;font-weight:700;font-size:14px;margin-bottom:9px}
+.required{color:var(--blue)}
+input[type=text],input[type=email],input[type=tel],select{
+  width:100%;padding:13px 14px;border:1px solid var(--line);border-radius:12px;
+  font:inherit;outline:none;background:white;color:var(--text);transition:.2s;
+}
+input:focus,select:focus{border-color:var(--blue);box-shadow:0 0 0 4px rgba(22,119,255,.1)}
+.options{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.option{position:relative}
+.option input{position:absolute;opacity:0}
+.option label{
+  margin:0;padding:13px 14px;border:1px solid var(--line);border-radius:12px;
+  background:#fff;cursor:pointer;font-weight:600;color:#31425d;transition:.2s;min-height:48px;
+  display:flex;align-items:center;
+}
+.option input:checked+label{border-color:var(--blue);background:#eef6ff;color:#075bc7;box-shadow:0 0 0 2px rgba(22,119,255,.08)}
+.option label:hover{border-color:#a9c9ef}
+.helper{font-size:12px;color:var(--muted);margin-top:7px}
+.conditional{display:none;margin-top:12px}
+textarea{
+ width:100%;min-height:90px;resize:vertical;padding:13px 14px;border:1px solid var(--line);
+ border-radius:12px;font:inherit;outline:none
+}
+textarea:focus{border-color:var(--blue);box-shadow:0 0 0 4px rgba(22,119,255,.1)}
+.nav{display:flex;gap:10px;margin-top:28px}
+button{
+ border:0;border-radius:12px;padding:13px 18px;font:inherit;font-weight:750;cursor:pointer;
+}
+.next{background:var(--navy);color:white;flex:1}
+.back{background:#eef2f7;color:var(--text)}
+.next:hover{filter:brightness(1.12)}
+.error{display:none;color:var(--danger);font-size:12px;margin-top:7px}
+.invalid{border-color:var(--danger)!important}
+.contact-note{
+ background:#f0f7ff;border:1px solid #cce3ff;padding:13px 14px;border-radius:12px;
+ color:#34506e;font-size:13px;line-height:1.45;margin-bottom:20px
+}
+.success{display:none;text-align:center;padding:52px 28px}
+.success-icon{
+ width:64px;height:64px;border-radius:50%;background:#e7f8ef;color:var(--success);
+ display:grid;place-items:center;font-size:30px;margin:0 auto 18px
+}
+.success h2{margin:0 0 8px;font-size:26px}
+.success p{color:var(--muted);line-height:1.55}
+.small{font-size:11px;color:#9aa6b5;margin-top:18px}
+@media(max-width:560px){
+ .container{width:min(100% - 18px,760px)}
+ header{padding-top:18px}
+ .top{padding:22px 18px 16px}
+ .form{padding:0 18px 22px}
+ h1{font-size:25px}
+ .options{grid-template-columns:1fr}
+ .steps{display:none}
+}
+</style>
+</head>
+<body>
+<div class="container">
+<header>
+  <div class="brand">
+    <div class="logo">A</div>
+    <div>
+      <div class="brand-name">AZYVION</div>
+      <div class="brand-tag">Technology Beyond Limits</div>
+    </div>
+    <select class="lang" id="language" aria-label="Idioma">
+      <option value="es">Español</option>
+      <option value="en">English</option>
+    </select>
+  </div>
+</header>
+
+<main class="card">
+  <div class="top">
+    <h1 id="mainTitle">Conozcamos tu negocio</h1>
+    <p class="subtitle" id="mainSubtitle">Cuéntanos qué haces, qué te gustaría mejorar y cómo podemos ayudarte. Te tomará aproximadamente 1–2 minutos.</p>
+    <div class="progress"><div class="progress-bar" id="progressBar"></div></div>
+    <div class="steps" id="stepLabels">
+      <span class="active">Negocio</span><span>Problemas</span><span>Procesos</span><span>Objetivos</span><span>Azyvion</span>
+    </div>
+  </div>
+
+  <form class="form" id="surveyForm">
+    <section class="step active" data-step="1">
+      <div class="step-title">Información del negocio</div>
+      <div class="step-desc">Empecemos con lo básico.</div>
+
+      <div class="field">
+        <label for="empresa">¿Cuál es el nombre de tu negocio o empresa? <span class="required">*</span></label>
+        <input id="empresa" name="empresa" type="text" required autocomplete="organization">
+        <div class="error">Este campo es obligatorio.</div>
+      </div>
+
+      <div class="field">
+        <label for="industria">¿A qué se dedica tu negocio? <span class="required">*</span></label>
+        <select id="industria" name="industria" required>
+          <option value="">Selecciona una opción</option>
+          <option>Comercio / tienda</option><option>Restaurante / alimentos</option>
+          <option>Servicios profesionales</option><option>Tecnología / informática</option>
+          <option>Construcción</option><option>Salud</option><option>Educación</option>
+          <option>Transporte / logística</option><option>Manufactura</option><option>Finanzas / contabilidad</option>
+          <option>Marketing / publicidad</option><option>Ventas</option><option>Otro</option>
+        </select>
+        <div class="error">Selecciona una opción.</div>
+      </div>
+      <div class="field conditional" id="industriaOtroWrap">
+        <label for="industriaOtro">¿A qué se dedica?</label>
+        <input id="industriaOtro" name="industria_otro" type="text">
+      </div>
+
+      <div class="field">
+        <label>¿Cuántas personas trabajan actualmente en tu negocio? <span class="required">*</span></label>
+        <div class="options">
+          <div class="option"><input id="tam1" name="tamano" value="Solo yo" type="radio" required><label for="tam1">👤 Solo yo</label></div>
+          <div class="option"><input id="tam2" name="tamano" value="2–5" type="radio"><label for="tam2">👥 2–5</label></div>
+          <div class="option"><input id="tam3" name="tamano" value="6–20" type="radio"><label for="tam3">👥 6–20</label></div>
+          <div class="option"><input id="tam4" name="tamano" value="21–50" type="radio"><label for="tam4">🏢 21–50</label></div>
+          <div class="option"><input id="tam5" name="tamano" value="Más de 50" type="radio"><label for="tam5">🏢 Más de 50</label></div>
+        </div>
+      </div>
+      <div class="nav"><button type="button" class="next" onclick="nextStep()">Continuar →</button></div>
+    </section>
+
+    <section class="step" data-step="2">
+      <div class="step-title">Problemas del negocio</div>
+      <div class="step-desc">No necesitas escribir mucho. Selecciona lo que más se parezca a tu situación.</div>
+
+      <div class="field">
+        <label>¿Qué tarea te quita más tiempo actualmente? <span class="required">*</span></label>
+        <div class="options">
+          <div class="option"><input id="t1" name="tarea_tiempo" value="Administración" type="radio" required><label for="t1">📋 Administración</label></div>
+          <div class="option"><input id="t2" name="tarea_tiempo" value="Inventario" type="radio"><label for="t2">📦 Inventario</label></div>
+          <div class="option"><input id="t3" name="tarea_tiempo" value="Ventas / facturación" type="radio"><label for="t3">💰 Ventas / facturación</label></div>
+          <div class="option"><input id="t4" name="tarea_tiempo" value="Atención a clientes" type="radio"><label for="t4">👥 Atención a clientes</label></div>
+          <div class="option"><input id="t5" name="tarea_tiempo" value="Reportes / información" type="radio"><label for="t5">📊 Reportes / información</label></div>
+          <div class="option"><input id="t6" name="tarea_tiempo" value="Organización / agenda" type="radio"><label for="t6">📅 Organización / agenda</label></div>
+          <div class="option"><input id="t7" name="tarea_tiempo" value="Documentos" type="radio"><label for="t7">📄 Documentos</label></div>
+          <div class="option"><input id="t8" name="tarea_tiempo" value="Comunicación" type="radio"><label for="t8">📱 Comunicación</label></div>
+          <div class="option"><input id="t9" name="tarea_tiempo" value="Procesos repetitivos" type="radio"><label for="t9">🔄 Procesos repetitivos</label></div>
+          <div class="option"><input id="t10" name="tarea_tiempo" value="Sistemas / tecnología" type="radio"><label for="t10">💻 Sistemas / tecnología</label></div>
+          <div class="option"><input id="t11" name="tarea_tiempo" value="Otro" type="radio"><label for="t11">Otro</label></div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>¿Hay alguna tarea que realizas manualmente y te gustaría automatizar? <span class="required">*</span></label>
+        <div class="options">
+          <div class="option"><input id="auto1" name="automatizacion" value="Sí, varias" type="radio" required><label for="auto1">Sí, varias</label></div>
+          <div class="option"><input id="auto2" name="automatizacion" value="Sí, una principalmente" type="radio"><label for="auto2">Sí, una principalmente</label></div>
+          <div class="option"><input id="auto3" name="automatizacion" value="No estoy seguro" type="radio"><label for="auto3">No estoy seguro</label></div>
+          <div class="option"><input id="auto4" name="automatizacion" value="No" type="radio"><label for="auto4">No</label></div>
+        </div>
+      </div>
+      <div class="field conditional" id="autoDetalleWrap">
+        <label for="autoDetalle">¿Cuál tarea te gustaría automatizar?</label>
+        <textarea id="autoDetalle" name="automatizacion_detalle"></textarea>
+      </div>
+
+      <div class="field">
+        <label>¿Qué parte de tu negocio sientes que podría funcionar mejor? <span class="required">*</span></label>
+        <div class="options">
+          <div class="option"><input id="mej1" name="mejorar" value="Administración" type="checkbox"><label for="mej1">Administración</label></div>
+          <div class="option"><input id="mej2" name="mejorar" value="Ventas" type="checkbox"><label for="mej2">Ventas</label></div>
+          <div class="option"><input id="mej3" name="mejorar" value="Atención al cliente" type="checkbox"><label for="mej3">Atención al cliente</label></div>
+          <div class="option"><input id="mej4" name="mejorar" value="Inventario" type="checkbox"><label for="mej4">Inventario</label></div>
+          <div class="option"><input id="mej5" name="mejorar" value="Facturación" type="checkbox"><label for="mej5">Facturación</label></div>
+          <div class="option"><input id="mej6" name="mejorar" value="Control de empleados" type="checkbox"><label for="mej6">Control de empleados</label></div>
+          <div class="option"><input id="mej7" name="mejorar" value="Información" type="checkbox"><label for="mej7">Información</label></div>
+          <div class="option"><input id="mej8" name="mejorar" value="Procesos internos" type="checkbox"><label for="mej8">Procesos internos</label></div>
+          <div class="option"><input id="mej9" name="mejorar" value="Tecnología" type="checkbox"><label for="mej9">Tecnología</label></div>
+          <div class="option"><input id="mej10" name="mejorar" value="Otra" type="checkbox"><label for="mej10">Otra</label></div>
+        </div>
+        <div class="error" id="mejorarError">Selecciona al menos una opción.</div>
+      </div>
+      <div class="nav"><button type="button" class="back" onclick="prevStep()">← Atrás</button><button type="button" class="next" onclick="nextStep()">Continuar →</button></div>
+    </section>
+
+    <section class="step" data-step="3">
+      <div class="step-title">¿Cómo trabajan actualmente?</div>
+      <div class="step-desc">Puedes seleccionar más de una opción.</div>
+      <div class="field">
+        <label>¿Cómo manejas actualmente los procesos de tu negocio? <span class="required">*</span></label>
+        <div class="options">
+          <div class="option"><input id="met1" name="metodo" value="Papel" type="checkbox"><label for="met1">📄 Papel</label></div>
+          <div class="option"><input id="met2" name="metodo" value="Excel" type="checkbox"><label for="met2">📊 Excel</label></div>
+          <div class="option"><input id="met3" name="metodo" value="Google Sheets" type="checkbox"><label for="met3">📈 Google Sheets</label></div>
+          <div class="option"><input id="met4" name="metodo" value="WhatsApp" type="checkbox"><label for="met4">💬 WhatsApp</label></div>
+          <div class="option"><input id="met5" name="metodo" value="Correo electrónico" type="checkbox"><label for="met5">📧 Correo electrónico</label></div>
+          <div class="option"><input id="met6" name="metodo" value="Software especializado" type="checkbox"><label for="met6">💻 Software especializado</label></div>
+          <div class="option"><input id="met7" name="metodo" value="Aplicaciones móviles" type="checkbox"><label for="met7">📱 Aplicaciones móviles</label></div>
+          <div class="option"><input id="met8" name="metodo" value="Varias herramientas diferentes" type="checkbox"><label for="met8">🧩 Varias herramientas</label></div>
+          <div class="option"><input id="met9" name="metodo" value="Todo se realiza manualmente" type="checkbox"><label for="met9">✋ Todo manual</label></div>
+          <div class="option"><input id="met10" name="metodo" value="Otro" type="checkbox"><label for="met10">Otro</label></div>
+        </div>
+        <div class="error" id="metodoError">Selecciona al menos una opción.</div>
+      </div>
+
+      <div class="field">
+        <label>¿Qué tan satisfecho estás con las herramientas que utilizas actualmente? <span class="required">*</span></label>
+        <div class="options">
+          <div class="option"><input id="sat1" name="satisfaccion" value="Muy satisfecho" type="radio" required><label for="sat1">⭐ Muy satisfecho</label></div>
+          <div class="option"><input id="sat2" name="satisfaccion" value="Satisfecho" type="radio"><label for="sat2">🙂 Satisfecho</label></div>
+          <div class="option"><input id="sat3" name="satisfaccion" value="Regular" type="radio"><label for="sat3">😐 Regular</label></div>
+          <div class="option"><input id="sat4" name="satisfaccion" value="Poco satisfecho" type="radio"><label for="sat4">🙁 Poco satisfecho</label></div>
+          <div class="option"><input id="sat5" name="satisfaccion" value="Nada satisfecho" type="radio"><label for="sat5">😣 Nada satisfecho</label></div>
+        </div>
+      </div>
+      <div class="nav"><button type="button" class="back" onclick="prevStep()">← Atrás</button><button type="button" class="next" onclick="nextStep()">Continuar →</button></div>
+    </section>
+
+    <section class="step" data-step="4">
+      <div class="step-title">Lo que quieres conseguir</div>
+      <div class="step-desc">Dinos qué cambio tendría más valor para tu negocio.</div>
+
+      <div class="field">
+        <label>Si pudieras mejorar una sola cosa de tu negocio con tecnología, ¿qué sería? <span class="required">*</span></label>
+        <div class="options">
+          <div class="option"><input id="obj1" name="objetivo" value="Automatizar tareas" type="radio" required><label for="obj1">⚙️ Automatizar tareas</label></div>
+          <div class="option"><input id="obj2" name="objetivo" value="Organizar mejor la información" type="radio"><label for="obj2">📊 Organizar información</label></div>
+          <div class="option"><input id="obj3" name="objetivo" value="Mejorar ventas" type="radio"><label for="obj3">💰 Mejorar ventas</label></div>
+          <div class="option"><input id="obj4" name="objetivo" value="Mejorar atención al cliente" type="radio"><label for="obj4">👥 Atención al cliente</label></div>
+          <div class="option"><input id="obj5" name="objetivo" value="Controlar inventario" type="radio"><label for="obj5">📦 Controlar inventario</label></div>
+          <div class="option"><input id="obj6" name="objetivo" value="Mejorar facturación" type="radio"><label for="obj6">🧾 Facturación</label></div>
+          <div class="option"><input id="obj7" name="objetivo" value="Administrar empleados" type="radio"><label for="obj7">👨‍💼 Administrar empleados</label></div>
+          <div class="option"><input id="obj8" name="objetivo" value="Obtener mejores reportes" type="radio"><label for="obj8">📈 Mejores reportes</label></div>
+          <div class="option"><input id="obj9" name="objetivo" value="Crear una página web" type="radio"><label for="obj9">🌐 Página web</label></div>
+          <div class="option"><input id="obj10" name="objetivo" value="Crear una aplicación" type="radio"><label for="obj10">📱 Aplicación</label></div>
+          <div class="option"><input id="obj11" name="objetivo" value="Implementar IA" type="radio"><label for="obj11">🤖 Implementar IA</label></div>
+          <div class="option"><input id="obj12" name="objetivo" value="No estoy seguro" type="radio"><label for="obj12">💡 No estoy seguro</label></div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="objetivoDetalle">Cuéntanos un poco más <span style="color:#9aa6b5;font-weight:500">(opcional)</span></label>
+        <textarea id="objetivoDetalle" name="objetivo_detalle" placeholder="Por ejemplo: quiero dejar de llevar los pedidos en Excel..."></textarea>
+      </div>
+
+      <div class="field">
+        <label>¿Te interesaría tener un sistema personalizado para tu negocio? <span class="required">*</span></label>
+        <div class="options">
+          <div class="option"><input id="sis1" name="sistema_personalizado" value="Sí" type="radio" required><label for="sis1">🟢 Sí</label></div>
+          <div class="option"><input id="sis2" name="sistema_personalizado" value="Tal vez" type="radio"><label for="sis2">🟡 Tal vez</label></div>
+          <div class="option"><input id="sis3" name="sistema_personalizado" value="No estoy seguro" type="radio"><label for="sis3">⚪ No estoy seguro</label></div>
+          <div class="option"><input id="sis4" name="sistema_personalizado" value="No" type="radio"><label for="sis4">🔴 No</label></div>
+        </div>
+      </div>
+      <div class="nav"><button type="button" class="back" onclick="prevStep()">← Atrás</button><button type="button" class="next" onclick="nextStep()">Continuar →</button></div>
+    </section>
+
+    <section class="step" data-step="5">
+      <div class="step-title">Conozcamos si podemos ayudarte</div>
+      <div class="step-desc">Este último paso es opcional y depende de si quieres recibir información de Azyvion.</div>
+
+      <div class="field">
+        <label>¿Te gustaría recibir información sobre soluciones de Azyvion? <span class="required">*</span></label>
+        <div class="options">
+          <div class="option"><input id="info1" name="quiere_contacto" value="Sí, quiero conocer más" type="radio" required><label for="info1">Sí, quiero conocer más</label></div>
+          <div class="option"><input id="info2" name="quiere_contacto" value="No, gracias" type="radio"><label for="info2">No, gracias</label></div>
+        </div>
+      </div>
+
+      <div id="contactSection" style="display:none">
+        <div class="contact-note">Perfecto. Déjanos tus datos y un miembro de Azyvion podrá contactarte por el medio que prefieras.</div>
+        <div class="field">
+          <label for="nombre">¿Cuál es tu nombre? <span class="required">*</span></label>
+          <input id="nombre" name="nombre" type="text" autocomplete="name">
+          <div class="error">Este campo es obligatorio.</div>
+        </div>
+        <div class="field">
+          <label for="correo">¿Cuál es tu correo electrónico? <span class="required">*</span></label>
+          <input id="correo" name="correo" type="email" autocomplete="email">
+          <div class="error">Ingresa un correo válido.</div>
+        </div>
+        <div class="field">
+          <label for="telefono">¿Cuál es tu número de WhatsApp o teléfono? <span class="required">*</span></label>
+          <input id="telefono" name="telefono" type="tel" autocomplete="tel">
+          <div class="error">Este campo es obligatorio.</div>
+        </div>
+        <div class="field">
+          <label>¿Cuál es tu cargo dentro de la empresa? <span class="required">*</span></label>
+          <div class="options">
+            <div class="option"><input id="cargo1" name="cargo" value="Propietario / fundador" type="radio"><label for="cargo1">Propietario / fundador</label></div>
+            <div class="option"><input id="cargo2" name="cargo" value="Gerente" type="radio"><label for="cargo2">Gerente</label></div>
+            <div class="option"><input id="cargo3" name="cargo" value="Administrador" type="radio"><label for="cargo3">Administrador</label></div>
+            <div class="option"><input id="cargo4" name="cargo" value="Encargado" type="radio"><label for="cargo4">Encargado</label></div>
+            <div class="option"><input id="cargo5" name="cargo" value="Empleado" type="radio"><label for="cargo5">Empleado</label></div>
+            <div class="option"><input id="cargo6" name="cargo" value="Socio" type="radio"><label for="cargo6">Socio</label></div>
+            <div class="option"><input id="cargo7" name="cargo" value="Otro" type="radio"><label for="cargo7">Otro</label></div>
+          </div>
+        </div>
+        <div class="field">
+          <label>¿Cuál es tu medio de contacto preferido? <span class="required">*</span></label>
+          <div class="options">
+            <div class="option"><input id="medio1" name="medio" value="WhatsApp" type="radio"><label for="medio1">💬 WhatsApp</label></div>
+            <div class="option"><input id="medio2" name="medio" value="Correo" type="radio"><label for="medio2">📧 Correo</label></div>
+            <div class="option"><input id="medio3" name="medio" value="Llamada" type="radio"><label for="medio3">📞 Llamada</label></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="nav"><button type="button" class="back" onclick="prevStep()">← Atrás</button><button type="submit" class="next" id="submitBtn">Enviar respuestas →</button></div>
+      <div class="small">Tus respuestas se utilizarán únicamente para comprender necesidades empresariales y, si lo autorizas, contactarte.</div>
+    </section>
+  </form>
+
+  <div class="success" id="success">
+    <div class="success-icon">✓</div>
+    <h2>¡Gracias por compartir!</h2>
+    <p>Hemos recibido tus respuestas. La información nos ayudará a comprender mejor las necesidades de tu negocio.</p>
+    <div class="small">Azyvion · Technology Beyond Limits</div>
+  </div>
+</main>
+</div>
+
+<script>
+/*
+  IMPORTANTE:
+  Reemplaza esta URL por la URL /exec de tu Google Apps Script Web App.
+  Ejemplo:
+  https://script.google.com/macros/s/TU_ID/exec
+*/
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxtFoPGl8G68lF8RXf6owSmcoGJh6In_FXafkcLjoFGo_S-0FSycysdZwm0jJGzf8Q/exec";
+
+let currentStep = 1;
+const totalSteps = 5;
+const form = document.getElementById("surveyForm");
+
+function showStep(n){
+  currentStep = n;
+  document.querySelectorAll(".step").forEach(s => s.classList.remove("active"));
+  document.querySelector(`.step[data-step="${n}"]`).classList.add("active");
+  document.getElementById("progressBar").style.width = ((n/totalSteps)*100) + "%";
+  document.querySelectorAll("#stepLabels span").forEach((s,i)=>s.classList.toggle("active",i<n));
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function validateStep(n){
+  const section = document.querySelector(`.step[data-step="${n}"]`);
+  let ok = true;
+
+  section.querySelectorAll("[required]").forEach(el=>{
+    if(el.offsetParent === null) return;
+    if(el.type === "radio" || el.type === "checkbox") return;
+    const valid = el.value.trim() !== "";
+    el.classList.toggle("invalid",!valid);
+    if(!valid) ok=false;
+  });
+
+  const requiredRadioNames = [...new Set(
+    [...section.querySelectorAll("input[type=radio][required]")].map(x=>x.name)
+  )];
+
+  requiredRadioNames.forEach(name=>{
+    const checked = section.querySelector(`input[name="${name}"]:checked`);
+    if(!checked) ok=false;
+  });
+
+  if(n===2){
+    const checked = section.querySelectorAll('input[name="mejorar"]:checked').length;
+    document.getElementById("mejorarError").style.display = checked ? "none" : "block";
+    if(!checked) ok=false;
+  }
+
+  if(n===3){
+    const checked = section.querySelectorAll('input[name="metodo"]:checked').length;
+    document.getElementById("metodoError").style.display = checked ? "none" : "block";
+    if(!checked) ok=false;
+  }
+
+  if(n===5 && document.querySelector('input[name="quiere_contacto"]:checked')?.value === "Sí, quiero conocer más"){
+    ["nombre","correo","telefono"].forEach(id=>{
+      const el=document.getElementById(id);
+      if(!el.value.trim() || (id==="correo" && !el.checkValidity())){
+        el.classList.add("invalid"); ok=false;
+      } else el.classList.remove("invalid");
+    });
+    if(!section.querySelector('input[name="cargo"]:checked')) ok=false;
+    if(!section.querySelector('input[name="medio"]:checked')) ok=false;
+  }
+  return ok;
+}
+
+function nextStep(){
+  if(validateStep(currentStep) && currentStep<totalSteps) showStep(currentStep+1);
+}
+
+function prevStep(){
+  if(currentStep>1) showStep(currentStep-1);
+}
+
+document.getElementById("industria").addEventListener("change",e=>{
+  document.getElementById("industriaOtroWrap").style.display=e.target.value==="Otro"?"block":"none";
+});
+document.querySelectorAll('input[name="automatizacion"]').forEach(x=>x.addEventListener("change",()=>{
+  const yes=["Sí, varias","Sí, una principalmente"].includes(document.querySelector('input[name="automatizacion"]:checked')?.value);
+  document.getElementById("autoDetalleWrap").style.display=yes?"block":"none";
+}));
+document.querySelectorAll('input[name="quiere_contacto"]').forEach(x=>x.addEventListener("change",()=>{
+  const yes=document.querySelector('input[name="quiere_contacto"]:checked')?.value==="Sí, quiero conocer más";
+  document.getElementById("contactSection").style.display=yes?"block":"none";
+  if(!yes){
+    ["nombre","correo","telefono"].forEach(id=>document.getElementById(id).value="");
+    document.querySelectorAll('#contactSection input[type="radio"]').forEach(x=>x.checked=false);
+  }
+}));
+
+form.addEventListener("submit",async e=>{
+  e.preventDefault();
+  if(!validateStep(5)) return;
+
+  const data = Object.fromEntries(new FormData(form).entries());
+  data.mejorar = [...document.querySelectorAll('input[name="mejorar"]:checked')].map(x=>x.value).join(", ");
+  data.metodo = [...document.querySelectorAll('input[name="metodo"]:checked')].map(x=>x.value).join(", ");
+  data.id = "AZY-" + Date.now().toString(36).toUpperCase();
+  data.idioma = document.getElementById("language").value;
+  data.fecha_cliente = new Date().toISOString();
+  data.origen = document.referrer || "Directo";
+
+  const btn=document.getElementById("submitBtn");
+  btn.disabled=true;
+  btn.textContent="Enviando...";
+
+  try{
+    if(APPS_SCRIPT_URL === "PEGA_AQUI_TU_URL_DE_APPS_SCRIPT"){
+      throw new Error("Configura primero la URL de Google Apps Script.");
+    }
+    await fetch(APPS_SCRIPT_URL,{
+      method:"POST",
+      mode:"no-cors",
+      headers:{"Content-Type":"text/plain;charset=utf-8"},
+      body:JSON.stringify(data)
+    });
+    form.style.display="none";
+    document.querySelector(".top").style.display="none";
+    document.getElementById("success").style.display="block";
+    localStorage.removeItem("azyvionSurveyDraft");
+  }catch(err){
+    btn.disabled=false;
+    btn.textContent="Enviar respuestas →";
+    alert("No pudimos enviar las respuestas. Verifica la conexión con Google Apps Script.");
+  }
+});
+
+document.getElementById("language").addEventListener("change",function(){
+  if(this.value==="en") translateEnglish();
+  else translateSpanish();
+});
+
+function translateEnglish(){
+  document.documentElement.lang="en";
+  document.getElementById("mainTitle").textContent="Tell us about your business";
+  document.getElementById("mainSubtitle").textContent="Tell us what you do, what you would like to improve, and how we can help. It takes about 1–2 minutes.";
+  const titles=["Business","Challenges","Processes","Goals","Azyvion"];
+  document.querySelectorAll("#stepLabels span").forEach((s,i)=>s.textContent=titles[i]);
+  // Keep the complete form labels/data values stable for Google Sheets.
+  // Only the visible interface title/navigation is translated here.
+  document.querySelectorAll(".back").forEach(b=>b.textContent="← Back");
+  document.querySelectorAll(".next").forEach(b=>{if(b.type!=="submit")b.textContent="Continue →"});
+  document.getElementById("submitBtn").textContent="Submit responses →";
+}
+function translateSpanish(){
+  document.documentElement.lang="es";
+  document.getElementById("mainTitle").textContent="Conozcamos tu negocio";
+  document.getElementById("mainSubtitle").textContent="Cuéntanos qué haces, qué te gustaría mejorar y cómo podemos ayudarte. Te tomará aproximadamente 1–2 minutos.";
+  const titles=["Negocio","Problemas","Procesos","Objetivos","Azyvion"];
+  document.querySelectorAll("#stepLabels span").forEach((s,i)=>s.textContent=titles[i]);
+  document.querySelectorAll(".back").forEach(b=>b.textContent="← Atrás");
+  document.querySelectorAll(".next").forEach(b=>{if(b.type!=="submit")b.textContent="Continuar →"});
+  document.getElementById("submitBtn").textContent="Enviar respuestas →";
+}
+</script>
+</body>
+</html>
